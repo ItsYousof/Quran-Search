@@ -13,9 +13,9 @@ function createResult(word, meaning, num, surah) {
     result.classList.add('result');
 
     result.innerHTML = `
-            <p id="word">${word}</p>
+            <p id="word">الكلمة:${word}</p>
             <p id="meaning">${meaning}</p>
-            <p id="number">${num !== null ? num : 'N/A'}</p>
+            <p id="number">آية:${num !== null ? num : 'N/A'}</p>
             <p id="surah">${surah !== null ? surah : 'N/A'}</p>
     `;
 
