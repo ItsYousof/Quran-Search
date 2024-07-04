@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arabic+Typesetting&display=swap');
+
+:root {
+    --primary-color: #007bff;
+    --dark-color: #343a40;
+    --light-color: #f4f4f4;
+    --success-color: #28a745;
+    --error-color: #dc3545;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.5;
+    background-color: var(--light-color);
+}
+
+.container {
+    text-align: center;
+
+    margin: 10rem 0 0 0;
+    overflow: auto;
+    padding: 0 2rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.5;
+}
+
+.search-box {
+   display: flex;
+   justify-content: center;
+   margin: 3rem 0 0 0;
+}
+
+.search-box input {
+    width: 50%;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    outline: none;
+}
+
+.search-box button {
+    padding: 0.5rem;
+}
+
+#results {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 3rem;
+}
+
+#results .result {
+    padding: 2.5rem;
+    margin: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    text-align: left;
+    background: #fff;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+#results .result p {
+    margin: 0.5rem 0;
+    text-align: center;
+    font-family: 'Arabic Typesetting', serif;
+}
+
+#word {
+    font-weight: bold;
+    font-size: 2.5rem;
+}
+
+#meaning {
+    font-size: 2.1rem;
+}
+
+#number {
+    font-size: 1.8rem;
+}
+
+#surah {
+    font-size: 1.5rem;
+}
+
+@media screen and (max-width: 768px) {
+    #results .result {
+        padding: 2.3rem 1.5rem;
+    }
+
+    #results .result p {
+        font-size: 2.5rem;
+    }
+    
+}
