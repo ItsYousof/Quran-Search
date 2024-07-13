@@ -61,9 +61,7 @@ wordInput.addEventListener('keyup', (e) => {
     if (e.key === 'Enter') {
         getWord();
     } else {
-        if (wordInput.length > 3) {
-            suggest();
-        }
+        suggest();
     }
 });
 
