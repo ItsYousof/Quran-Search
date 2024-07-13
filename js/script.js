@@ -83,7 +83,4 @@ async function suggest() {
 
     resultsContainer.innerHTML = '';
 
-    suggestions.forEach(result=>{
-        createResult(result.word, result.meaning, result.num, result.surah)
-    });
 }
