@@ -15,8 +15,7 @@ function createResult(word, meaning, num, surah) {
     result.innerHTML = `
             <p id="word">${word}</p>
             <p id="meaning">${meaning}</p>
-            <p id="number">آية:${num !== null ? num : 'N/A'}</p>
-            <p id="surah">${surah !== null ? surah : 'N/A'}</p>
+            <p id="surah">${surah !== null ? surah : 'N/A'} آية: ${num !== null ? num : 'N/A'}</p>
     `;
 
     resultsContainer.appendChild(result);
@@ -61,7 +60,13 @@ wordInput.addEventListener('keyup', (e) => {
     if (e.key === 'Enter') {
         getWord();
     } else {
-        suggest();
+        if (wordInput.value.length === 0) {
+            resultsContainer.innerHTML = '';
+        } else {
+            if (wordInput.value.length >= 3) {
+                suggest();
+            }
+        }
     }
 });
 
@@ -83,4 +88,11 @@ async function suggest() {
 
     resultsContainer.innerHTML = '';
 
+    if (suggestions.length === 0) {
+        resultsContainer.innerHTML = '<p>لم يتم العثور على نتائج</p>';
+    } else {
+        suggestions.forEach(entry => {
+            createResult(entry.word, entry.meaning, entry.ayaNumber, entry.surahName);
+        });
+    }
 }
