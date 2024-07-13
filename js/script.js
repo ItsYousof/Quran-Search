@@ -32,7 +32,7 @@ async function getWord() {
         return;
     }
 
-    const response = await fetch('../words.json'); // Replace with the actual path to your JSON file
+    const response = await fetch('../words.json');
     const data = await response.json();
 
     // Preprocess data to store both the original word and the word without Tashkeel
@@ -60,5 +60,60 @@ async function getWord() {
 wordInput.addEventListener('keyup', (e) => {
     if (e.key === 'Enter') {
         getWord();
+    } else {
+        suggest();
     }
 });
+
+wordInput.onfocus = function () {
+    document.querySelector(".container").style.display = 'none';
+    document.querySelector(".container").style.transition = 'all 0.3s'  
+    document.querySelector(".search-box").style.margin = '0';
+    document.querySelector(".search-box input").style.width = "100%";
+    document.querySelector(".search-box").style.transition = "all 0.3s";
+    document.querySelector(".search-box input").style.borderTop = 'none';
+    document.querySelector(".search-box input").style.borderRight = 'none';
+    document.querySelector(".search-box input").style.borderLeft = 'none';
+    document.querySelector(".search-box input").style.borderWidth = '1px';
+    document.querySelector(".search-box input").style.padding = "15px";
+    document.querySelector(".search-box input").placeholder = '';
+}
+
+async function suggest() {
+    const words = await fetch("../words.json");
+    const data = await words.json();
+
+    const processedData = data.map(entry => ({
+        ...entry,
+        wordWithoutTashkeel: removeTashkeel(entry.word)
+    }));
+
+    const normalizedWord = removeTashkeel(wordInput.value);
+
+    const suggestions = processedData.filter(entry => entry.wordWithoutTashkeel.startsWith(normalizedWord));
+
+    const suggestContainer = document.getElementById('suggest');
+    suggestContainer.innerHTML = '';
+
+    if (suggestions.length > 0) {
+        suggestions.forEach(entry => {
+            const suggestion = document.createElement('p');
+            suggestion.innerHTML = `${entry.word}`;
+            suggestion.classList.add('suggestionP');
+            suggestContainer.appendChild(suggestion);
+
+            suggestion.addEventListener('click', () => {
+                document.querySelector(".search-box").style.display = 'none';
+                document.querySelector(".container").style.display = 'block';
+                createResult(entry.word, entry.meaning, entry.ayaNumber, entry.surahName);
+                wordInput.value = entry.word;
+                suggestContainer.innerHTML = '';
+            });
+        });
+    } else {
+        const suggestion = document.createElement('p');
+        suggestion.innerHTML = 'No suggestions';
+        suggestion.classList.add('suggestion');
+        suggestContainer.appendChild(suggestion);
+    }
+}

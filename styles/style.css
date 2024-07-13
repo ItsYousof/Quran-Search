@@ -28,25 +28,45 @@ body {
     padding: 0 2rem;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     line-height: 1.5;
 }
 
 .search-box {
-   display: flex;
-   justify-content: center;
-   margin: 3rem 0 0 0;
+    display: flex;
+    justify-content: center;
+    margin: 3rem 0 0 0;
 }
 
 .search-box input {
     width: 50%;
     padding: 0.5rem;
-    margin-right: 0.5rem;
     outline: none;
+    position: fixed;
 }
 
-.search-box button {
+.search-box .suggestions {
+    width: 100%;
     padding: 0.5rem;
+    outline: none;
+    margin-top: 2.7rem;
+}
+
+.search-box .suggestionP {
+    padding: 0.5rem;
+    background: #fff;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    margin: 0.5rem 0;
+    width: 100%;
+    font-family: "Cairo", sans-serif;
+    display: flex;
+    justify-content: space-between;
 }
 
 #results {
@@ -69,33 +89,49 @@ h1, h2, h3, h4, h5, h6 {
 #results .result p {
     margin: 0.5rem 0;
     text-align: center;
-    font-family: 'Arabic Typesetting', serif;
+    font-family: "Cairo", sans-serif;
 }
 
 #word {
     font-weight: bold;
-    font-size: 2.5rem;
+    font-size: 2rem;
 }
 
 #meaning {
-    font-size: 2.1rem;
-}
-
-#number {
-    font-size: 1.8rem;
-}
-
-#surah {
     font-size: 1.5rem;
 }
 
-@media screen and (max-width: 768px) {
+#number {
+    font-size: 1.3rem;
+}
+
+#surah {
+    font-size: 1.2rem;
+}
+
+@media screen and (max-width: 400px) {
     #results .result {
-        padding: 2.3rem 1.5rem;
+        padding: 2rem 1.5rem;
     }
 
     #results .result p {
         font-size: 2.5rem;
     }
-    
+
+    #word {
+        font-size: 1rem;
+    }
+
+    #meaning {
+        font-size: 0.01rem;
+    }
+
+    #number {
+        font-size: 1rem;
+    }
+
+    #surah {
+        font-size: 1rem;
+    }
 }
+
