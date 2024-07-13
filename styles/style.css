@@ -17,14 +17,13 @@
 body {
     font-family: "Cairo", sans-serif;
     line-height: 1.5;
+    overflow: hidden;
     background-color: var(--light-color);
 }
 
 .container {
     text-align: center;
-
     margin: 10rem 0 0 0;
-    overflow: auto;
     padding: 0 2rem;
 }
 
@@ -49,6 +48,8 @@ h6 {
     outline: none;
     text-align: right;
     font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    height: 2.5rem;
 }
 
 #results {
@@ -66,6 +67,7 @@ h6 {
     text-align: left;
     background: #fff;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    width: 100%;
 }
 
 #results .result p {
