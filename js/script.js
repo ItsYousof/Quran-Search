@@ -13,7 +13,7 @@ function createResult(word, meaning, num, surah) {
     result.classList.add('result');
 
     result.innerHTML = `
-            <p id="word">الكلمة:${word}</p>
+            <p id="word">${word}</p>
             <p id="meaning">${meaning}</p>
             <p id="number">آية:${num !== null ? num : 'N/A'}</p>
             <p id="surah">${surah !== null ? surah : 'N/A'}</p>
@@ -61,23 +61,12 @@ wordInput.addEventListener('keyup', (e) => {
     if (e.key === 'Enter') {
         getWord();
     } else {
-        suggest();
+        if (wordInput.length > 3) {
+            suggest();
+        }
     }
 });
 
-wordInput.onfocus = function () {
-    document.querySelector(".container").style.display = 'none';
-    document.querySelector(".container").style.transition = 'all 0.3s'  
-    document.querySelector(".search-box").style.margin = '0';
-    document.querySelector(".search-box input").style.width = "100%";
-    document.querySelector(".search-box").style.transition = "all 0.3s";
-    document.querySelector(".search-box input").style.borderTop = 'none';
-    document.querySelector(".search-box input").style.borderRight = 'none';
-    document.querySelector(".search-box input").style.borderLeft = 'none';
-    document.querySelector(".search-box input").style.borderWidth = '1px';
-    document.querySelector(".search-box input").style.padding = "15px";
-    document.querySelector(".search-box input").placeholder = '';
-}
 
 async function suggest() {
     const words = await fetch("../words.json");
@@ -92,28 +81,11 @@ async function suggest() {
 
     const suggestions = processedData.filter(entry => entry.wordWithoutTashkeel.startsWith(normalizedWord));
 
-    const suggestContainer = document.getElementById('suggest');
-    suggestContainer.innerHTML = '';
+    const resultsContainer = document.getElementById("results")
 
-    if (suggestions.length > 0) {
-        suggestions.forEach(entry => {
-            const suggestion = document.createElement('p');
-            suggestion.innerHTML = `${entry.word}`;
-            suggestion.classList.add('suggestionP');
-            suggestContainer.appendChild(suggestion);
+    resultsContainer.innerHTML = '';
 
-            suggestion.addEventListener('click', () => {
-                document.querySelector(".search-box").style.display = 'none';
-                document.querySelector(".container").style.display = 'block';
-                createResult(entry.word, entry.meaning, entry.ayaNumber, entry.surahName);
-                wordInput.value = entry.word;
-                suggestContainer.innerHTML = '';
-            });
-        });
-    } else {
-        const suggestion = document.createElement('p');
-        suggestion.innerHTML = 'No suggestions';
-        suggestion.classList.add('suggestion');
-        suggestContainer.appendChild(suggestion);
-    }
+    suggestions.forEach(result=>{
+        createResult(result.word, result.meaning, result.num, result.surah)
+    });
 }
