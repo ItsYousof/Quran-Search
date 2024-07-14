@@ -15,15 +15,6 @@
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="moblie-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="السراج في بيان غريب القرآن">
     <title>السراج في بيان غريب القرآن</title>
     <link rel="stylesheet" href="styles/style.css">
     <script src="https://kit.fontawesome.com/828c19ed9a.js" crossorigin="anonymous"></script>
@@ -38,15 +29,51 @@
     </div>
     <div id="results"></div>
     <script src="js/script.js"></script>
-    <script src="add-to-homescreen-master/src/addtohomescreen.js"></script>
     <script>
-        if (
-            (("standalone" in window.navigator) && window.navigator.standalone) 
-            ||
-            (window.matchMedia("(display-mode: standalone)").matches)
-        ) {
-            addToHomescreen();
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then(registration => {
+              console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(error => {
+              console.log('Service Worker registration failed:', error);
+            });
         }
-    </script>
+      </script>
+      <script>
+        let deferredPrompt;
+      
+        window.addEventListener('beforeinstallprompt', (e) => {
+          // Prevent the mini-infobar from appearing on mobile
+          e.preventDefault();
+          // Stash the event so it can be triggered later.
+          deferredPrompt = e;
+      
+          // Update UI notify the user they can install the PWA
+          showInstallPromotion();
+      
+          document.getElementById('installButton').addEventListener('click', () => {
+            // Show the install prompt
+            deferredPrompt.prompt();
+            // Wait for the user to respond to the prompt
+            deferredPrompt.userChoice.then((choiceResult) => {
+              if (choiceResult.outcome === 'accepted') {
+                console.log('User accepted the install prompt');
+              } else {
+                console.log('User dismissed the install prompt');
+              }
+              deferredPrompt = null;
+            });
+          });
+        });
+      
+        function showInstallPromotion() {
+          // Show the installation UI (e.g., display an install button)
+          const installButton = document.createElement('button');
+          installButton.id = 'installButton';
+          installButton.textContent = 'Install App';
+          document.body.appendChild(installButton);
+        }
+      </script>            
 </body>
 </html>
