@@ -28,6 +28,13 @@
         <input type="text" id="word-input" placeholder="أدخل كلمة">
     </div>
     <div id="results"></div>
+    <!-- Add this in your HTML body where you want the button to appear -->
+    <div id="installPrompt" style="display: none;">
+        <button id="installButton" class="fancy-button">
+        <span>Install App</span>
+        </button>
+    </div>
+  
     <script src="js/script.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
@@ -42,38 +49,42 @@
       </script>
       <script>
         let deferredPrompt;
-      
+
         window.addEventListener('beforeinstallprompt', (e) => {
-          // Prevent the mini-infobar from appearing on mobile
-          e.preventDefault();
-          // Stash the event so it can be triggered later.
-          deferredPrompt = e;
-      
-          // Update UI notify the user they can install the PWA
-          showInstallPromotion();
-      
-          document.getElementById('installButton').addEventListener('click', () => {
+        // Prevent the mini-infobar from appearing on mobile
+        e.preventDefault();
+        // Stash the event so it can be triggered later.
+        deferredPrompt = e;
+
+        // Update UI to notify the user they can install the PWA
+        showInstallPromotion();
+
+        document.getElementById('installButton').addEventListener('click', () => {
             // Show the install prompt
             deferredPrompt.prompt();
             // Wait for the user to respond to the prompt
             deferredPrompt.userChoice.then((choiceResult) => {
-              if (choiceResult.outcome === 'accepted') {
+            if (choiceResult.outcome === 'accepted') {
                 console.log('User accepted the install prompt');
-              } else {
+            } else {
                 console.log('User dismissed the install prompt');
-              }
-              deferredPrompt = null;
+            }
+            deferredPrompt = null;
+            hideInstallPromotion();
             });
-          });
         });
-      
+        });
+
         function showInstallPromotion() {
-          // Show the installation UI (e.g., display an install button)
-          const installButton = document.createElement('button');
-          installButton.id = 'installButton';
-          installButton.textContent = 'Install App';
-          document.body.appendChild(installButton);
+        const installPrompt = document.getElementById('installPrompt');
+        installPrompt.style.display = 'block';
         }
+
+        function hideInstallPromotion() {
+        const installPrompt = document.getElementById('installPrompt');
+        installPrompt.style.display = 'none';
+        }
+
       </script>            
 </body>
 </html>
