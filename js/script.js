@@ -44,6 +44,9 @@ async function getWord() {
 
     const results = processedData.filter(entry => entry.wordWithoutTashkeel === normalizedWord);
 
+    // Sort results based on surahNumber
+    results.sort((a, b) => a.surahNumber - b.surahNumber);
+
     resultsContainer.innerHTML = ''; // Clear previous results
 
     if (results.length === 0) {
@@ -84,7 +87,8 @@ async function suggest() {
 
     const suggestions = processedData.filter(entry => entry.wordWithoutTashkeel.startsWith(normalizedWord));
 
-    const resultsContainer = document.getElementById("results")
+    // Sort suggestions based on surahNumber
+    suggestions.sort((a, b) => a.surahNumber - b.surahNumber);
 
     resultsContainer.innerHTML = '';
 
