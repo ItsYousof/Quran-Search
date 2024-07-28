@@ -45,7 +45,6 @@
         installButton.style.display = 'block';
     
         installButton.addEventListener('click', () => {
-          installButton.style.display = 'none';
           deferredPrompt.prompt();
           deferredPrompt.userChoice.then((choiceResult) => {
             if (choiceResult.outcome === 'accepted') {
